@@ -1,19 +1,17 @@
 import { db } from "@/firebase/config";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { Ref, ref, watchEffect } from "vue";
 import Collection from "@/types/Collection";
 
-const getCollection = <T extends Collection>(c: string) => {
-  const documents = ref<T[]>([]) as Ref<T[]>;
+const getCollection = <T extends Collection>(c: string, id: string) => {
+  const document = ref<T | null>(null) as Ref<T | null>;
   const error = ref<string>("") as Ref<string>;
 
   const unsub = onSnapshot(
-    query(collection(db, c), orderBy("createdAt", "desc")),
+    doc(db, c, id),
     (snap) => {
-      console.log("snapshot");
-      documents.value = snap.docs.map(
-        (doc) => ({ ...doc.data(), id: doc.id } as T)
-      );
+      console.log("snapshot for one doc");
+      document.value = { ...snap.data(), id: snap.id } as T;
     },
     (err) => {
       console.log(err.message);
@@ -23,7 +21,7 @@ const getCollection = <T extends Collection>(c: string) => {
 
   watchEffect((onInvalidate) => onInvalidate(unsub));
 
-  return { documents, error };
+  return { document, error };
 };
 
 export default getCollection;

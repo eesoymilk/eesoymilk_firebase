@@ -9163,10 +9163,10 @@ vuetify-loader@^2.0.0-alpha.0:
     querystring "^0.2.1"
     upath "^2.0.1"
 
-vuetify@^3.0.0-alpha.0:
-  version "3.0.0-alpha.12"
-  resolved "https://registry.npmmirror.com/vuetify/-/vuetify-3.0.0-alpha.12.tgz#c781ebf16a9bb89dd8dfd27c1848efd534545336"
-  integrity sha512-F9TwV3Xk6J/bSH422kATrKeIiumGRkzGJPsvM0/8vPwYF0HWh7dHRhhYsIKkfhl5UJl/LYdeGNm1L8+jtldA0w==
+"vuetify@npm:@vuetify/nightly@3.0.0-next-20220202.0":
+  version "3.0.0-next-20220202.0"
+  resolved "https://registry.yarnpkg.com/@vuetify/nightly/-/nightly-3.0.0-next-20220202.0.tgz#12c799ef2de81bd2f75fd27bfe3dc9c407f64960"
+  integrity sha512-bHl5QPCC+F5AN4bl/gcsDoMjRPZic+ecZLf0t3YORNI7eChHHCSTpILyihI26f8+lxgVPli+0U7QnrJaWQy3HA==
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"

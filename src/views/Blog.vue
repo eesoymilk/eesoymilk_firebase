@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row justify="space-between">
       <v-col cols="auto">
-        <v-btn-toggle v-model="text" group>
+        <v-btn-toggle group>
           <v-btn value="all"> All </v-btn>
           <v-btn value="diary"> Diary </v-btn>
           <v-btn value="academic"> Course </v-btn>
@@ -10,22 +10,10 @@
         </v-btn-toggle>
       </v-col>
       <v-col cols="auto">
-        <v-btn @click="isPosting = !isPosting">Add New Post</v-btn>
+        <v-btn :to="{ name: 'CreatePost' }">Add New Post</v-btn>
       </v-col>
-      <!-- <v-col cols="auto">
-        <v-btn-toggle v-model="text" tile color="light-green accent-3" group>
-          <v-btn value="left"> Left </v-btn>
-          <v-btn value="center"> Center </v-btn>
-          <v-btn value="right"> Right </v-btn>
-          <v-btn value="justify"> Justify </v-btn>
-        </v-btn-toggle>
-      </v-col> -->
     </v-row>
   </v-container>
-
-  <v-overlay v-model="isPosting">
-    <CreatePost />
-  </v-overlay>
 
   <v-card
     color="light-gray lighten-5outline "
@@ -39,6 +27,14 @@
 
     <v-container fluid>
       <v-row justify="end">
+        <v-col cols="auto" v-for="tag in post.tags" :key="tag">
+          <v-chip>#{{ tag }}</v-chip>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <!-- <v-container fluid>
+      <v-row justify="end">
         <v-col cols="auto">
           <v-item-group>
             <v-item v-for="tag in post.tags" :key="tag">
@@ -47,21 +43,26 @@
           </v-item-group>
         </v-col>
       </v-row>
-    </v-container>
+    </v-container> -->
 
     <v-card-actions>
       <v-container fluid>
         <v-row justify="end">
           <v-col cols="auto">
-            <v-btn outline flat color="light-blue">
+            <v-btn
+              outline
+              flat
+              color="light-blue"
+              :to="{ name: 'Post', params: { id: post.id } }"
+            >
               <v-icon>mdi-dots-horizontal</v-icon>
-              More
+              <span> More </span>
             </v-btn>
           </v-col>
           <v-col cols="auto">
             <v-btn outline flat color="light-blue" @click="deletePost(post.id)">
               <v-icon>mdi-delete</v-icon>
-              Delete
+              <span> Delete </span>
             </v-btn>
           </v-col>
         </v-row>
@@ -71,17 +72,14 @@
 </template>
 
 <script lang="ts">
-import CreatePost from "@/components/CreatePost.vue";
-import { defineComponent, Ref, ref } from "vue";
+import { defineComponent } from "vue";
 import { Post } from "@/types/Post";
 import getCollection from "@/composables/getCollection";
 import deleteDocument from "@/composables/deleteDocument";
 
 export default defineComponent({
   name: "Blog",
-  components: { CreatePost },
   setup() {
-    const isPosting = ref<boolean>(false) as Ref<boolean>;
     const { documents: blog, error } = getCollection<Post>("blog");
     const deletePost = async (id: string) => {
       const deletedPost = await deleteDocument<Post>("blog", id);
@@ -91,7 +89,7 @@ export default defineComponent({
         console.log("You deleted:", deletedPost.document.value);
       }
     };
-    return { isPosting, blog, error, deletePost };
+    return { blog, error, deletePost };
   },
 });
 </script>
