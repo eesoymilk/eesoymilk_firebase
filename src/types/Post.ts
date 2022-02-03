@@ -1,10 +1,15 @@
 import Collection from "./Collection";
 
-export default interface Post extends Collection {
+interface PostContent {
   title: string;
   body: string;
   tags: string[];
 }
+
+interface Post extends Collection, PostContent {}
+
+export { Post, PostContent };
+
 // export default interface Post {
 //   title: string;
 //   body: string;
