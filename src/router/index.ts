@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Blog from "../views/Blog.vue";
-import CreatePost from "../views/CreatePost.vue";
+import CreatePost from "../components/CreatePost.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
